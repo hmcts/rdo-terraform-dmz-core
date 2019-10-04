@@ -1,0 +1,17 @@
+module "rdo-proxy" {
+  source                            = "github.com/hmcts/rdo-terraform-azure-proxy.git"
+  rg_name                           = "${azurerm_resource_group.rg_dmz.name}"
+  rg_location                       = "${azurerm_resource_group.rg_dmz.location}"
+  proxy_vm_name                     = "${var.proxy_vm_name}"
+  proxy_admin_username              = "${var.proxy_admin_username}"
+  proxy_admin_password              = "${var.proxy_admin_password}"
+  proxy_admin_ssh_public_key        = "${var.proxy_admin_ssh_public_key}"
+  subscription_id                   = "${var.subscription_id}"
+  address_prefix                    = "${element(azurerm_subnet.subnet.*.id, index(azurerm_subnet.subnet.*.name, var.proxy_subnet_vip))}"
+  proxy_subnet_vip                  = "${element(azurerm_subnet.subnet.*.id, index(azurerm_subnet.subnet.*.name, var.proxy_subnet_vip))}"
+  vnet_name                         = "${var.vnet_name}"
+  arm_client_id                     = "${var.arm_client_id }"
+  arm_client_secret                 = "${var.arm_client_secret}"
+  arm_tenant_id                     = "${var.arm_tenant_id}"
+  palo_subnet                       = "${data.azurerm_subnet.sub_hub_transit_public.address_prefix}"
+}

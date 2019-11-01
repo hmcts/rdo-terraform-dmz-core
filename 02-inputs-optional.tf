@@ -17,4 +17,6 @@ variable "azuredevops_ips" {
     default = [ "13.107.6.0/24", "13.107.9.0/24", "13.107.42.0/24", "13.107.43.0/24"]
 }
 
-
+variable "ddosplan" {
+    deafult = "basic"
+}

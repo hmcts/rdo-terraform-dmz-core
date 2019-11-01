@@ -10,6 +10,7 @@ variable "subnet-mgmt-prefix" { }
 variable "subnet-dmz-loadbalancer-prefix" { }
 variable "subnet-dmz-palo-public-prefix" { }
 variable "subnet-dmz-palo-private-prefix" { }
+variable "subnet-dmz-azure-fw-prefix" {}
 
 variable "loadbalancer_subnet_management" { }
 variable "loadbalancer_subnet_vip" { }

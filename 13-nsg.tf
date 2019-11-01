@@ -10,14 +10,6 @@ resource "azurerm_network_security_group" "nsg_loadbalancer" {
   resource_group_name               = "${azurerm_resource_group.rg_dmz.name}"
 }
 
-
-resource "azurerm_network_security_group" "nsg_proxy" {
-  name                              = "nsg_proxy"
-  location                          = "${azurerm_resource_group.rg_dmz.location}"
-  resource_group_name               = "${azurerm_resource_group.rg_dmz.name}"
-}
-
-
 resource "azurerm_network_security_group" "nsg_palo_public" {
   name                              = "nsg_palo_public"
   location                          = "${azurerm_resource_group.rg_dmz.location}"
@@ -44,19 +36,6 @@ resource "azurerm_network_security_rule" "permit_trusted_mgmt" {
   network_security_group_name         = "${azurerm_network_security_group.nsg_mgmt.name}"
 }
 
-  resource "azurerm_network_security_rule" "permit_trusted_proxy" {
-  name                                = "permit_trusted_proxy"
-  priority                            = 203
-  direction                           = "Inbound"
-  access                              = "Allow"
-  protocol                            = "tcp"
-  source_port_range                   = "*"
-  destination_port_range              = "*"
-  source_address_prefix               = "213.121.161.124/32"
-  destination_address_prefix          = "*"
-  resource_group_name                 = "${azurerm_resource_group.rg_dmz.name}"
-  network_security_group_name         = "${azurerm_network_security_group.nsg_proxy.name}"
-}
 
 resource "azurerm_network_security_rule" "deny_all" {
   name                                = "deny_all"
@@ -105,24 +84,6 @@ resource "azurerm_network_security_rule" "azure_devops_loadbalancer" {
   network_security_group_name         = "${azurerm_network_security_group.nsg_loadbalancer.name}"
 }
 
-
-
-resource "azurerm_network_security_rule" "azure_devops_proxy" {
-  name                                = "Azure_DataCenter_IPs"
-  description		                      = "Azure_DataCenter_IPs"
-  priority                            = 202
-  direction                           = "Inbound"
-  access                              = "Allow"
-  protocol                            = "*"
-  source_port_range                   = "*"
-  destination_port_range              = "*"
-  source_address_prefix               = "AzureCloud"
-  destination_address_prefix          = "*"
-  resource_group_name                 = "${azurerm_resource_group.rg_dmz.name}"
-  network_security_group_name         = "${azurerm_network_security_group.nsg_proxy.name}"
-}
-
-
 resource "azurerm_network_security_rule" "AzureLoadBalancer_22" {
   name                                = "AzureLoadBalancer_22"
   description		                      = "AzureLoadBalancer_22"
@@ -166,12 +127,6 @@ resource "azurerm_network_security_rule" "AzureLoadBalancer_80" {
   destination_address_prefix          = "*"
   resource_group_name                 = "${azurerm_resource_group.rg_dmz.name}"
   network_security_group_name         = "${azurerm_network_security_group.nsg_loadbalancer.name}"
-}
-
-
-resource "azurerm_subnet_network_security_group_association" "proxy-subnet-nsg" {
-  subnet_id                         = "${azurerm_subnet.subnet-dmz-proxy.id}"
-  network_security_group_id         = "${azurerm_network_security_group.nsg_proxy.id}"
 }
 
 resource "azurerm_subnet_network_security_group_association" "lb-subnet-nsg" {

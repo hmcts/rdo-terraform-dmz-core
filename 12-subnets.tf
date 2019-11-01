@@ -24,19 +24,6 @@ resource "azurerm_subnet" "subnet-dmz-loadbalancer" {
 }
 
 
-resource "azurerm_subnet" "subnet-dmz-proxy" {
-  name                                = "dmz-proxy"
-  resource_group_name                 = "${azurerm_resource_group.rg_dmz.name}"
-  virtual_network_name                = "${azurerm_virtual_network.vnet_dmz.name}"
-  address_prefix                      = "${var.subnet-dmz-proxy-prefix}"
-  network_security_group_id           = "${azurerm_network_security_group.nsg_proxy.id}"
-  lifecycle { 
-     ignore_changes                 = ["route_table_id"]
- }
-
-}
-
-
 resource "azurerm_subnet" "subnet-dmz-palo-public" {
   name                                = "dmz-palo-public"
   resource_group_name                 = "${azurerm_resource_group.rg_dmz.name}"
@@ -71,11 +58,6 @@ resource "azurerm_subnet_network_security_group_association" "nsg_mgmt" {
 resource "azurerm_subnet_network_security_group_association" "nsg_loadbalancer" {
   subnet_id                           = "${azurerm_subnet.subnet-dmz-loadbalancer.id}"
   network_security_group_id           = "${azurerm_network_security_group.nsg_loadbalancer.id}"
-}
-
-resource "azurerm_subnet_network_security_group_association" "nsg_proxy" {
-  subnet_id                           = "${azurerm_subnet.subnet-dmz-proxy.id}"
-  network_security_group_id           = "${azurerm_network_security_group.nsg_proxy.id}"
 }
 
 

@@ -4,8 +4,8 @@ This is the second module that is run after [HUB-CORE](https://github.com/hmcts/
 
 ### Documentation
 
-  - https://tools.hmcts.net/confluence/display/RD/HUB-DMZ+Overview
+  - [Confluence: HUB-DMZ](https://tools.hmcts.net/confluence/display/RD/HUB-DMZ+Overview)
 
 ### Pipeline
 
-- https://dev.azure.com/hmcts/DevOps/_build?definitionId=226&_a=summary
+- [Azure DevOps: HUB-DMZ](https://dev.azure.com/hmcts/DevOps/_build?definitionId=226&_a=summary)
